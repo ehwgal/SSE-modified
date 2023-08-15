@@ -54,11 +54,23 @@ As the climbing gym noise data used in our project is not public, this code will
 
 ### Instructions for training
 After following the previous steps, we can start training the model.
-The configuration settings for this model can be found in config.yaml
+The configuration settings for this model can be found in ```config.yaml```, this is where you can just things like the number of epochs or the batch size for training. Please make sure that the settings are to your liking.  
+
+Then, go into the ```train_model.sh``` file and change the base_dir variable to your base_dir path (you should technically only have to change the student number here). In the terminal, this can be done using a vim- or nano editor. Afterwards, please execute:
+```
+sbatch train_model.sh  
+
+```
+
+You can then check whether your model has started running by executing ```squeue -u <student number>``` in the command line. It will likely take a while for the job to start running, as we are making use of the long GPU node. Once the job has started running, it will output a slurm file that keeps track of the training progress. It is recommended to execute the following command:
+```
+tail -f <name of slurm file>
+
+```
+This will show you the progress in the terminal while the model is training. As seen in ```train.py```, the training loss is printed every 10 epochs, and a model checkpoint is outputted every 100 epochs. The final outputted model is called ```sep_trainer_final.pth```.
 
 ### Instructions for testing
 
-## References
 ## References
 
 [1] <a id="1">J. Salamon, C. Jacoby and J. P. Bello, "A Dataset and Taxonomy for Urban Sound Research" In 22nd ACM International Conference on Multimedia, Orlando USA, Nov. 2014.</a>
