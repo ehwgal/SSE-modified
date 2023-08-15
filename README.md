@@ -7,6 +7,16 @@ The code used for this thesis project is a modified version of the Self-Supervis
 - Link to their original code: https://github.com/jeffreyjeffreywang/SSE
 - Link to their paper: https://arxiv.org/pdf/2006.10388.pdf
 
-## Description of the Project
-
 ## Instructions for Running the Code
+The code is specifically tailored to run on the GPU of the HPC cluster of the University of Groningen, called Hábrók.
+Further documentation for this cluster can be found here: https://wiki.hpc.rug.nl/habrok/start  
+
+As a first step, please go inside your scratch folder on the cluster and replace *s0000000* with your student number:  
+``` cd /scratch/s0000000/ ```
+
+
+
+### Instructions for training
+
+
+### Instructions for testing
