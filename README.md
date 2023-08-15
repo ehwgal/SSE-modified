@@ -38,10 +38,21 @@ python -m venv .env
 
 ```  
 
-If you change the name of the environment, please be sure to change the name of the environment in the .sh files as well. 
+The .sh scripts will automatically activate the environment and install the required dependencies that can be found in ```requirements.txt```. If you change the name of the environment, please be sure to change the name of the environment in the .sh files as well. 
 
+After this, we need to obtain the data for training and testing.
+The files used for data are too large to upload to GitHub, so please download them here:
+The ```urbansound16k.tar.gz``` is a pre-processed version of part of the UrbanSound8K data set (CITE).
+The ```librispeech_selection.tar.gz``` is a pre-processed version of the train-clean-100 subset of LibriSpeech (CITE).
+The folder additionally contains a ```BASELINE.pth``` file which can be used for trying out the test script, in case you do not want to train a model from scratch.
+
+As the climbing gym noise data used in our project is not public, this code will simply show how to run the model with only the UrbanSound8K and LibriSpeech data. Please download both of the ```tar.gz``` files and place them in the main ```SSE-modified``` folder.
+**DO NOT UNTAR THESE FILES. In the .sh scripts, these data files are untarred to a local temporary directory.**
+**After the job is done running, the temporary directory is deleted for more memory-efficient processing of data.**
+**For more information on this, see: ...**
 
 ### Instructions for training
-
+After following the previous steps, we can start training the model.
+The configuration settings for this model can be found in config.yaml
 
 ### Instructions for testing
