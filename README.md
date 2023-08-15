@@ -13,7 +13,7 @@ Further documentation for this cluster can be found here: https://wiki.hpc.rug.n
 
 As a first step, please go inside your scratch folder on the cluster and replace ```s0000000``` with your student number:  
 ```  
- cd /scratch/s0000000/  
+cd /scratch/s0000000/  
 
 ```
   
@@ -33,12 +33,12 @@ Before training or testing with the code, please create a virtual environment. W
 In the terminal, run:  
 ```
 module purge
-module load ...
+module load Python/3.10.4-GCCcore-11.3.0-bare
 python -m venv .env  
 
 ```  
 
-If you change the name of the environment, please be sure to change the name of the environment in the bash scripts as well. 
+If you change the name of the environment, please be sure to change the name of the environment in the .sh files as well. 
 
 
 ### Instructions for training
