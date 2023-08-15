@@ -22,7 +22,7 @@ Then clone the repository:
 git clone https://github.com/ehwgal/SSE-modified.git  
 
 ```
-(You can also clone via SSH by setting up an SSH key on the cluster via ssh-keygen, see the documentation: https://wiki.hpc.rug.nl/habrok/connecting_to_the_system/ssh_key_login?s[]=keygen).  
+(You can also clone via SSH by setting up an SSH key on the cluster via ssh-keygen, [as specified in the documentation](https://wiki.hpc.rug.nl/habrok/connecting_to_the_system/ssh_key_login?s[]=keygen)).  
 Once cloning is succesful, go inside the cloned repo:
 ``` 
 cd SSE-modified  
@@ -46,17 +46,17 @@ The ```urbansound16k.tar.gz``` is a pre-processed version of part of the UrbanSo
 The ```librispeech_selection.tar.gz``` is a pre-processed version of the train-clean-100 subset of LibriSpeech [[2]](#2).
 The folder additionally contains a ```BASELINE.pth``` file which can be used for trying out the test script, in case you do not want to train a model from scratch.
 
-As the climbing gym noise data used in our project is not public, this code will simply show how to run the model with only the UrbanSound8K and LibriSpeech data. Please download both of the ```tar.gz``` files and place them in the main ```SSE-modified``` folder.  
+As the climbing gym noise data used in our project is not public, this code will simply show how to run the model with only the UrbanSound8K and LibriSpeech data as a demonstration, but results will not be significant. Please download both of the ```tar.gz``` files and place them in the main ```SSE-modified``` folder.  
 
-> :warning: **DO NOT UNTAR THESE FILES. In the .sh scripts, these data files are untarred to a local temporary directory.**
+> :warning: **DO NOT UNTAR THESE FILES. In the .sh scripts, these .tar.gz files are untarred to a local temporary directory.**
 **After the job is done running, the temporary directory is deleted for more memory-efficient processing of data.**
 **For more information on this, see: https://wiki.hpc.rug.nl/habrok/advanced_job_management/many_file_jobs**
 
 ### Instructions for training
 After following the previous steps, we can start training the model.
-The configuration settings for this model can be found in ```config.yaml```, this is where you can just things like the number of epochs or the batch size for training. Please make sure that the settings are to your liking.  
+The configuration settings for this model can be found in ```config.yaml```, this is where you can adjust things like the number of epochs or the batch size for training. Please make sure that the settings are to your liking.  
 
-Then, go into the ```train_model.sh``` file and change the base_dir variable to your base_dir path (you should technically only have to change the student number here). In the terminal, this can be done using a vim- or nano editor. Afterwards, please execute:
+Then, go into the ```train_model.sh``` file and change the base_dir variable to your base_dir path (you should technically only have to change the student number here). In the terminal, this can be done using a vim or nano editor. Afterwards, please execute:
 ```
 sbatch train_model.sh  
 
