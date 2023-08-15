@@ -59,7 +59,9 @@ The configuration settings for this model can be found in config.yaml
 ### Instructions for testing
 
 ## References
-<a id="1">[1]</a> 
-J. Salamon, C. Jacoby and J. P. Bello, "A Dataset and Taxonomy for Urban Sound Research" In 22nd ACM International Conference on Multimedia, Orlando USA, Nov. 2014.
-<a id="2">[2]</a>
-Panayotov, V., Chen, G., Povey, D., & Khudanpur, S. (2015, April). "Librispeech: an ASR corpus based on public domain audio books" In 2015 IEEE international conference on acoustics, speech and signal processing (ICASSP) (pp. 5206-5210). IEEE.
+## References
+
+[1] <a id="1">J. Salamon, C. Jacoby and J. P. Bello, "A Dataset and Taxonomy for Urban Sound Research" In 22nd ACM International Conference on Multimedia, Orlando USA, Nov. 2014.</a>
+
+[2] <a id="2"> Panayotov, V., Chen, G., Povey, D., & Khudanpur, S. (2015, April). "Librispeech: an ASR corpus based on public domain audio books" In 2015 IEEE international conference on acoustics, speech and signal processing (ICASSP) (pp. 5206-5210). IEEE.</a>
+
