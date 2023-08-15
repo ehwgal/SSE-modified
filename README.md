@@ -50,7 +50,7 @@ As the climbing gym noise data used in our project is not public, this code will
 
 > :warning: **DO NOT UNTAR THESE FILES. In the .sh scripts, these data files are untarred to a local temporary directory.**
 **After the job is done running, the temporary directory is deleted for more memory-efficient processing of data.**
-**For more information on this, see: ...**
+**For more information on this, see: https://wiki.hpc.rug.nl/habrok/advanced_job_management/many_file_jobs**
 
 ### Instructions for training
 After following the previous steps, we can start training the model.
