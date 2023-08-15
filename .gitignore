@@ -1,4 +1,5 @@
 *.pth
+*.out
 urbansound16k.tar.gz
 librispeech_selection.tar.gz
 .env/
