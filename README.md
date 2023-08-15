@@ -11,9 +11,22 @@ The code used for this thesis project is a modified version of the Self-Supervis
 The code is specifically tailored to run on the GPU of the HPC cluster of the University of Groningen, called Hábrók.
 Further documentation for this cluster can be found here: https://wiki.hpc.rug.nl/habrok/start  
 
-As a first step, please go inside your scratch folder on the cluster and replace *s0000000* with your student number:  
-``` cd /scratch/s0000000/ ```
+As a first step, please go inside your scratch folder on the cluster and replace ```s0000000``` with your student number:  
+```  
 
+ cd /scratch/s0000000/  
+
+  
+```
+  
+Then clone the repository:
+```  
+
+git clone https://github.com/ehwgal/SSE-modified.git  
+
+
+```
+(You can also clone via SSH by setting up an SSH key on the cluster via ssh-keygen, see the documentation: https://wiki.hpc.rug.nl/habrok/connecting_to_the_system/ssh_key_login?s[]=keygen).
 
 
 ### Instructions for training
