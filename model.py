@@ -264,7 +264,7 @@ class Encoder(nn.Module):
         # EQ
         if self.eq:
             if x.dim() ==4:
-                mu = torch.mean(x, (2,3) keepdim=True)
+                mu = torch.mean(x, (2,3), keepdim=True)
             elif x.dim() ==3:
                 mu = torch.mean(x, 2, keepdim=True)
             x = x/(mu+EPS)
