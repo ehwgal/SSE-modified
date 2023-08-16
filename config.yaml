@@ -26,8 +26,8 @@ pure_noise_a: 0
 pure_noise_b: 0 # no pure noise examples
 
 # Optimization options -- number of epochs for CAE and MAE
-epochs_a: 10
-epochs_b: 10
+epochs_a: 250
+epochs_b: 250
 
 lr: 0.0001
 beta1: 0.5

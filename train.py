@@ -78,17 +78,13 @@ if not args.pretrain_clean:
         #    wandb.log({'train_loss': loss})
         if epoch % 10 == 0:
             end = time.time()
-            # Domain A original audio
-           # wandb.log({"audio_a": [wandb.Audio(scale_audio(audio[0].cpu()).numpy(), \
-            #                                     caption="input_audio_a", sample_rate=config['sr'])]})
-            # Domain A within domain reconstruction
-           # wandb.log({"recon_audio_a": [wandb.Audio(scale_audio(x_a_recon[0].detach().cpu()).numpy(), \
-            #                                     caption="recon_audio_a", sample_rate=config['sr'])]})
+
             print('Epoch %d -- loss: %.3f, time: %.3f'%(epoch,torch.mean(loss.detach()).item(),end-start))
 
     print('Finish training autoencoder A')
-
-    torch.save(trainer.gen_a.state_dict(), args.pretrain_CAE)
+    
+    CAE = os.path.join(args.base_dir, args.pretrain_CAE)
+    torch.save(trainer.gen_a.state_dict(), CAE)
 
 # Train the noisy autoencoder
 print('Start training autoencoder B')

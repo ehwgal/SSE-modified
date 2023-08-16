@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=00:10:00
+#SBATCH --time=2-00:00:00
 #SBATCH --nodes=1
 #SBATCH --partition=gpu
 #SBATCH --gpus-per-node=a100
@@ -30,7 +30,10 @@ pip install -r "${base_dir}requirements.txt"
 
 wandb login
 
+# train the clean autoencoder (A)
 python -u "${base_dir}train.py" --base_dir "$base_dir" --urban_noise False
+# train the mixture autoencoder (B)
+python -u "${base_dir}train.py" --base_dir "$base_dir" --pretrain_clean True --urban_noise False
 
 # deactivate virtual environment
 deactivate
