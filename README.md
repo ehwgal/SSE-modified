@@ -85,7 +85,7 @@ For testing, we have added an additional metric to our ```metrics.py``` file cal
 git clone https://github.com/gabrielmittag/NISQA.git
 
 ```
-(Or do so via SSH). Make sure that the cloned NISQA project is right under the main ```SSE-modified``` folder of this project. 
+(Or do so via SSH: ```git clone git@github.com:gabrielmittag/NISQA.git```). Make sure that the cloned NISQA project is right under the main ```SSE-modified``` folder of this project. 
 After this, make sure you are logged into your wandb account as previously explained. 
 
 Then, go into your ```test_model.sh``` file and change the base_dir variable (i.e. change the student number in the path).   
