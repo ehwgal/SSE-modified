@@ -20,8 +20,6 @@ module load PyTorch/1.12.1-foss-2022a-CUDA-11.7.0
 
 # activate virtual environment
 source "${base_dir}.env/bin/activate"
-pip show torch
-nvcc --version
 
 # Upgrade pip and install requirements
 pip install --upgrade pip

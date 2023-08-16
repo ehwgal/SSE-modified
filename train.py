@@ -13,7 +13,7 @@ import time
 
 # Command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--base_dir', type=str, default='/scratch/s5397774/SSE-modified/')
+parser.add_argument('--base_dir', type=str) # base_dir defined in train_model.sh
 parser.add_argument('--device_id', type=int, default=0)
 parser.add_argument('--config_file',type=str, default='config.yaml')
 parser.add_argument('--pretrain_clean', type=bool, default=False) # if set to True, we start training MAE from a pre-existing CAE

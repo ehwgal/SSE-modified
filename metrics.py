@@ -30,12 +30,11 @@ from pesq import pesq, PesqError
 
 EPS = 1e-8
 
-def eval_composite(clean_utt, Genh_utt, mixture=True, noisy_utt=None):
+def eval_composite(clean_utt, Genh_utt, mixture=True, base_dir=None, noisy_utt=None):
     clean_utt = clean_utt.reshape(-1)
     Genh_utt = Genh_utt.reshape(-1)
     csig, cbak, covl, pesq, ssnr, nisqa, stoi = CompositeEval(clean_utt,
-                                                 Genh_utt, mixture,
-                                                 True)
+                                                 Genh_utt, mixture, base_dir, True)
     evals = {'csig':csig, 'cbak':cbak, 'covl':covl,
             'pesq':pesq, 'ssnr':ssnr, 'nisqa':nisqa, 'stoi':stoi}
     if noisy_utt is not None:
@@ -43,7 +42,7 @@ def eval_composite(clean_utt, Genh_utt, mixture=True, noisy_utt=None):
         csig, cbak, covl, \
         pesq, ssnr, nisqa, stoi = CompositeEval(clean_utt,
                                    noisy_utt,
-                                   True)
+                                   True, base_dir)
         return evals, {'csig':csig, 'cbak':cbak, 'covl':covl,
                 'pesq':pesq, 'ssnr':ssnr, 'nisqa':nisqa, 'stoi':stoi}
     else:
@@ -69,7 +68,7 @@ def STOI_calculate(ref_wav, deg_wav):
 
     return stoi_score
 
-def NISQA(deg_wav):
+def NISQA(deg_wav, base_dir):
     # NISQA does not require a reference
 
     tfl = tempfile.NamedTemporaryFile()
@@ -79,7 +78,7 @@ def NISQA(deg_wav):
 
     curr_dir = os.getcwd()
 
-    os.chdir('/scratch/s5397774/SSE-modified/NISQA')
+    os.chdir('{}NISQA'.format(base_dir))
 
     # get NISQA score
     output = subprocess.check_output([f"python run_predict.py --mode predict_file --pretrained_model weights/nisqa_tts.tar --deg {deg_tfl}"], shell=True)
@@ -155,7 +154,7 @@ def SSNR(ref_wav, deg_wav, srate=16000, eps=1e-10):
         start += int(skiprate)
     return overall_snr, segmental_snr
 
-def CompositeEval(ref_wav, deg_wav, mixture, log_all=False):
+def CompositeEval(ref_wav, deg_wav, mixture, base_dir, log_all=False):
     # returns [sig, bak, ovl]
     alpha = 0.95
     len_ = min(ref_wav.shape[0], deg_wav.shape[0])
@@ -182,7 +181,7 @@ def CompositeEval(ref_wav, deg_wav, mixture, log_all=False):
 
     # Compute the PESQ
     pesq_raw = PESQ(ref_wav, deg_wav, mixture)
-    nisqa_raw = NISQA(deg_wav)
+    nisqa_raw = NISQA(deg_wav, base_dir)
     stoi_raw = STOI_calculate(ref_wav, deg_wav)
 
     def trim_mos(val):

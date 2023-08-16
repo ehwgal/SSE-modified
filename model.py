@@ -255,16 +255,16 @@ class Encoder(nn.Module):
             for i in range(len(self.layers)):
                 x = self.layers[i](x)
                 if x.dim() == 4:
-                    mu = torch.mean(x, (2,3), keepdim=True) # if 3-dimensional, take into account height and width dimension
-                elif x.dim() == 3:
-                    mu = torch.mean(x, 2, keepdim=True) # if 2-dimensional, take into account length dimension
+                    mu = torch.mean(x, (2,3), keepdim=True) # calculate mu over height and width dimensions
+                elif x.dim() ==3:
+                    mu = torch.mean(x, 2, keepdim=True) # calculate mu over length dimension
                 x = x/(mu+EPS)
         else:
             x = self.conv(x)    
         # EQ
         if self.eq:
             if x.dim() ==4:
-                mu = torch.mean(x, (2,3), keepdim=True)
+                mu = torch.mean(x, (2,3) keepdim=True)
             elif x.dim() ==3:
                 mu = torch.mean(x, 2, keepdim=True)
             x = x/(mu+EPS)

@@ -32,36 +32,37 @@ torch.backends.cudnn.benchmark = False
 
 # Command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--base_dir', type=str, default='/scratch/s5397774/SSE-modified/')
+parser.add_argument('--base_dir', type=str) # base_dir defined in test_model.sh
 parser.add_argument('--config_file',type=str, default='config.yaml')
-parser.add_argument('--trained_model', type=str, default='BASELINE.pth')
-parser.add_argument('--test_snr', type=int, default=None) # choose the SNR to test for: -5, 0, or 5 if you are creating your own test set
-parser.add_argument('--subdir', type=str, default=None) # choose the data class to test for in your set
+parser.add_argument('--trained_model', type=str, default='FINAL_MODIFIED_MODEL.pth') # choose model to evaluate
+parser.add_argument('--test_snr', type=int, default=5) # choose the SNR to test for: -5, 0, or 5 if you are creating your own test set
+parser.add_argument('--subdir', type=str, default='class9') # choose the data class to test for in your set: class0, class2, class4 or class9
 parser.add_argument('--padding', type=bool, default=True) # decide whether to add padding to audio
-parser.add_argument('--data_available', type=bool, default=True) # turn to False if you want to create your own test set
-parser.add_argument('--chosen_file', type=str, default='climbing_children_snr_minus5.pkl') # path to created test set
+parser.add_argument('--data_available', type=bool, default=False) # turn to False if you want to create your own test set
+parser.add_argument('--chosen_file', type=str, default=None) # path to created test set (.pkl file)
+parser.add_argument('--urban_noise', type=bool, default=False)
 args = parser.parse_args()
 
 tmpdir = os.environ.get('TMPDIR')
 # Select device
-device = torch.device("cpu")
+device = torch.device("cuda:0")
 
 # test set to select noise from
-TEST_SET = "{}/gymnoise_testing/".format(tmpdir)
+TEST_SET = "{}/urbansound16k/test/".format(tmpdir)
 
 # Get configuration
 config_file = os.path.join(args.base_dir, args.config_file)
 config = get_config(config_file)
-config['urban_noise'] = args.urban_noise
+config["urban_noise"] = args.urban_noise
 BASE_DIR = args.base_dir
+TRAINED_MODEL = os.path.join(args.base_dir, args.trained_model)
 
-trainer = torch.load(args.trained_model, map_location=device)
+trainer = torch.load(TRAINED_MODEL, map_location=device)
 
 if args.data_available == False:
     # get clean speech files and noise files
     train_A_files, train_B_files, test_A_files, test_B_files = get_files()
     test_noise_files = obtain_noise_files(TEST_SET, sub_dir=args.subdir)
-    print("CHECK:\n", test_noise_files[0], "\n", test_noise_files[1])
 
     # load test data and create mixtures
     test_dapsnoise = TestDapsNoise(test_B_files, test_noise_files, config['sr'],config['clip_size'],config['pure_noise_b'],args.test_snr,'test')
@@ -71,7 +72,7 @@ if args.data_available == False:
     for i, audio_pair in enumerate(test_dataloader):
         test_data.append(audio_pair)
 
-    with open('/scratch/s5397774/SSE-modified/TRYOUT_MUSIC_5.pkl', 'wb') as file:
+    with open('{}/test_data.pkl'.format(BASE_DIR), 'wb') as file:
         pickle.dump(test_data, file)
 else:
     with open('{}/{}'.format(BASE_DIR, args.chosen_file), 'rb') as file:
@@ -79,13 +80,13 @@ else:
         test_data = pickle.load(file)
 
 print("Obtained test data!")
-#print("Current test snr: ", int(args.test_snr))
+print("Current test snr: ", int(args.test_snr))
 
 
 # Evaluation
 
 def process_full_audio(trainer, mixture_test, window_size=2, stride=2):
-    
+    """ This function predicts an enhanced signal from the mixture in 2-second chunks """
     audio_length = len(mixture_test.reshape(-1)) 
     output_audio = []
 
@@ -121,20 +122,19 @@ def process_full_audio(trainer, mixture_test, window_size=2, stride=2):
 
     return enhanced_audio, padding
 
-scores_out = {'csig':[],'cbak':[],'covl':[],'pesq':[],'ssnr':[], 'nisqa':[], 'stoi':[]} # add stoinet measure
+scores_out = {'csig':[],'cbak':[],'covl':[],'pesq':[],'ssnr':[], 'nisqa':[], 'stoi':[]}
 scores_mix = {'csig':[],'cbak':[],'covl':[],'pesq':[],'ssnr':[], 'nisqa':[], 'stoi':[]}
 # cbak csig covl pesq stoi and ssnr are intrusive measures
-# nisqa and stoinet are non-intrusive measures and model-based
+# nisqa is non-intrusive and model-based
 
 wandb.init()
 
-for i, (mixture, clean) in enumerate(test_data[0]):
+# calculate scores
+for i, (mixture, clean) in enumerate(test_data):
    
     # obtain model prediction (enhanced audio)
     enhanced, zero_padding = process_full_audio(trainer, mixture)  
-    print("ENHANCED DIMENSIONS: ", enhanced.shape)
-    print("MIXTURE DIMENSIONS: ", mixture.shape)
-
+    
     if args.padding:
         # make clean and mixture same size as enhanced by adding padding
         # (csig and covl will not be calculated due to zeroes)
@@ -150,9 +150,9 @@ for i, (mixture, clean) in enumerate(test_data[0]):
     #print("length enhanced: ", len(enhanced.reshape(-1)) / 16000, "s")
 
     add_score(eval_composite(clean[0,:].float().numpy(),\
-                                    enhanced[0,:].detach().cpu().float().numpy(), mixture=False),scores_out) # score added for enhanced
+                                    enhanced[0,:].detach().cpu().float().numpy(), mixture=False, base_dir=BASE_DIR),scores_out) # score added for enhanced
     add_score(eval_composite(clean[0,:].float().numpy(),\
-                                   mixture[0,:].detach().cpu().float().numpy(), mixture=True),scores_mix) # scor
+                                   mixture[0,:].detach().cpu().float().numpy(), mixture=True, base_dir=BASE_DIR),scores_mix) # score added for mixture
 avg_score_mix = avg_score(scores_mix)
 avg_score_out = avg_score(scores_out)
 print('Score mixture: ', avg_score_mix)
