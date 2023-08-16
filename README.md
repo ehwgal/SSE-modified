@@ -81,6 +81,14 @@ tail -f <name of slurm file>
 This will show you the progress in the terminal while the model is training. As seen in ```train.py```, the training loss is printed every 10 epochs, and a model checkpoint is outputted every 100 epochs. The final outputted model is called ```sep_trainer_final.pth```.
 
 ### Instructions for testing
+For testing, we have added an additional metric to our ```metrics.py``` file called NISQA. In order to make this work, we first need to clone the NISQA project (as there is no pip library available yet). Please execute:
+```
+git clone https://github.com/gabrielmittag/NISQA.git
+
+```
+(Or do so via SSH). Make sure that the cloned NISQA project is right under the main ```SSE-modified``` folder of this project. 
+
+< TO BE FINISHED SOON >
 
 ## References
 
