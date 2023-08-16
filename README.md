@@ -12,7 +12,7 @@ Some of the modifications we implemented include:
 - Changing the forward functions of the Encoder and Decoder in ```model.py``` to work with complex numbers.
 - Have the STFT in ```stft.py``` return complex output.
 - Have the first layer of the Encoder and last layer of the Decoder work with complex 3D input and 2D convolutions. We also added the parameters for the 2D convolutions (kernel_size, stride) in ```config.yaml```.
-- Created a new evaluation script called ```test.py``` (based on code by Wang et al.).
+- Created a new evaluation script called ```test.py``` (based on code by Wang et al.) and created a TestDapsNoise class in ```dataloader.py``` which creates the mixtures for testing.
 - Introduced a new metric calculation in ```metrics.py``` (the NISQA function).
 
 ## Instructions for Running the Code
