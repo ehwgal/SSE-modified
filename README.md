@@ -7,6 +7,14 @@ The code used for this thesis project is a modified version of the Self-Supervis
 - Link to their original code: https://github.com/jeffreyjeffreywang/SSE
 - Link to their paper: https://arxiv.org/pdf/2006.10388.pdf
 
+## Implemented Modifications
+Some of the modifications we implemented include:  
+- Changing the forward functions of the Encoder and Decoder in ```model.py``` to work with complex numbers.
+- Have the STFT in ```stft.py``` return complex output.
+- Have the first layer of the Encoder and last layer of the Decoder work with complex 3D input and 2D convolutions. We also added the parameters for the 2D convolutions (kernel_size, stride) in ```config.yaml```.
+- Created a new evaluation script called ```test.py``` (based on code by Wang et al.).
+- Introduced a new metric calculation in ```metrics.py``` (the NISQA function).
+
 ## Instructions for Running the Code
 The code is specifically tailored to run on the GPU of the HPC cluster of the University of Groningen, called Hábrók.
 Further documentation for this cluster can be found here: https://wiki.hpc.rug.nl/habrok/start  
