@@ -95,7 +95,7 @@ sbatch test_model.sh
 
 ``` 
 
-In ```test.py```, you can adjust all kinds of paremeter settings for the evaluation, such as the name of the trained model you want to evaluate. You can choose whether to create your own data set (which entails choosing an SNR and UrbanSound8K class to create the mixtures with), or you can choose to test on already available data (in this case, indicate the name of the ``.pkl``` file containing the data). Please have a look at these settings to see whether they are to your liking.
+In ```test.py```, you can adjust all kinds of paremeter settings for the evaluation, such as the name of the trained model you want to evaluate. You can choose whether to create your own data set (which entails choosing an SNR and UrbanSound8K class to create the mixtures with), or you can choose to test on already available data (in this case, indicate the name of the ```.pkl``` file containing the data). Please have a look at these settings to see whether they are to your liking.
 
 
 ## References
