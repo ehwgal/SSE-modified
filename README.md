@@ -48,6 +48,8 @@ python -m venv .env
 
 The .sh scripts will automatically activate the environment and install the required dependencies that can be found in ```requirements.txt```. If you change the name of the environment, please be sure to change the name of the environment in the .sh files as well. 
 
+Furthermore, if you haven't yet, please create [a Weights and Biases (WandB) account](https://wandb.ai/login) and [log in via the terminal](https://docs.wandb.ai/ref/cli/wandb-login) before running the jobs. This allows you to track the training via the wandb website.
+
 ### Data
 After this, we need to obtain the data for training and testing.
 The files used for data are too large to upload to GitHub, so please download them [from this Google Drive](https://drive.google.com/drive/u/0/folders/1QqpeEmKIfQERUHWt1yVtQSyGfB2GtEmf).
